@@ -23,7 +23,9 @@ set expandtab " Input blank space instead of tab
 set smarttab
 set bs=eol,start,indent " Use backspace
 set wmnu " Show the possible list when autofilling 
-set fileencodings=utf-8,euc-kr " Set file encoding
+"set fileencodings=utf-8,euc-kr " Set file encoding
+set encoding=utf-8
+set fileencodings=utf-8,cp949
 
 set title
 set autowrite
