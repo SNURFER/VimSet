@@ -19,6 +19,7 @@ COLOR_LIGHT_PURPLE='\033[1;35m'
 COLOR_LIGHT_CYAN='\033[1;36m'
 COLOR_WHITE='\033[1;37m'
 
+CURRENT_PATH=${PWD}
 #sed -e '2 i\wowowowowowowowowowow' vimrc
 #if [ -e ~/.vim/bundle/Vundle.vim ]
 #then
@@ -65,15 +66,58 @@ install_ctrlp() {
       echo -e ${COLOR_RED} "ctrlp is already installed"
   else
     git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
+      echo "set runtimepath^=~/.vim/bundle/ctrlp.vim" >> vimrc
+      echo "set wildignore+=*/tmp/*,*.so,*.swp,*.zip " >> vimrc
+      echo "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']" >> vimrc
     fi
       echo -e ${COLOR_NONE} "========================================================="
 }
 
+install_gitgutter() {
+  if [ -e ~/.vim/bundle/vim-gitgutter ]
+    then
+      echo -e ${COLOR_RED} "ctrlp is already installed"
+  else
+    git clone git://github.com/airblade/vim-gitgutter.git ~/.vim/bundle/vim-gitgutter
+      echo "set runtimepath^=~/.vim/bundle/vim-gitgutter" >> vimrc
+fi
+      echo -e ${COLOR_NONE} "========================================================="
+}
+
+install_ycm() {
+  sudo apt-get install build-essential cmake python3-dev \
+    && echo "start install you_complete_me" \
+    || { echo -e "${COLOR_RED} You need to install 'build-essential', 'cmake', 'python3-dev' before install you_complete_me ${COLOR_NONE}" ; }
+  git clone --recursive https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
+  cd ~/.vim/bundle/YouCompleteMe
+  python3 install.py --clang-completer
+
+  cd ${CURRENT_PATH}
+
+  echo " \"You Complete Me configuration" >> vimrc
+  echo "set encoding=utf-8" >> vimrc
+  echo "highlight YcmErrorLine ctermbg=LightBlue ctermfg=DarkGray cterm=bold guibg=#3f0000" >> vimrc
+  echo "let g:ycm_error_symbol = '!!'" >> vimrc
+  echo "let g:ycm_warning_symbol = '>>'" >> vimrc
+  echo "let g:ycm_max_num_candidates = 1" >> vimrc
+  echo "map <C-F> :YcmCompleter FixIt<CR>" >> vimrc
+  echo "map <C-V> :YcmCompleter GoTo<CR>" >> vimrc
+  echo "set runtimepath^=~/.vim/bundle/YouCompleteMe" >> vimrc
+
+}
 
 #main
 
+mv ${HOME}/.vimrc ${HOME}/vimrc_backup
+cd ${HOME}/.vim/bundle
+echo "remove all plugin"
+rm -rf *
+echo "remove complete"
+cd ${CURRENT_PATH}
 install_light_line
 install_ctrlp
+install_gitgutter
+install_ycm
 
 cp vimrc ${HOME}/.vimrc
-#cp tmux.conf ${HOME}/.tmux.conf
+cp tmux.conf ${HOME}/.tmux.conf
