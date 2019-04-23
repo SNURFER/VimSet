@@ -106,6 +106,12 @@ install_ycm() {
 
 }
 
+install_tagbar() {
+  git clone https://github.com/majutsushi/tagbar ~/.vim/bundle/tagbar
+    echo " \" tagbar configuration" >> vimrc
+    echo "map <C-O> :Tagbar<CR>" >> vimrc 
+}
+
 #main
 
 mv ${HOME}/.vimrc ${HOME}/vimrc_backup
@@ -118,6 +124,7 @@ install_light_line
 install_ctrlp
 install_gitgutter
 install_ycm
+install_tagbar
 
 cp vimrc ${HOME}/.vimrc
 cp tmux.conf ${HOME}/.tmux.conf
