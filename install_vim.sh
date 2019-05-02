@@ -109,6 +109,7 @@ install_ycm() {
 install_tagbar() {
   git clone https://github.com/majutsushi/tagbar ~/.vim/bundle/tagbar
     echo " \" tagbar configuration" >> vimrc
+    echo "set runtimepath^=~/.vim/bundle/tagbar" >> vimrc
     echo "map <C-O> :Tagbar<CR>" >> vimrc 
 }
 
