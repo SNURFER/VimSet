@@ -109,11 +109,27 @@ install_ycm() {
 install_tagbar() {
   git clone https://github.com/majutsushi/tagbar ~/.vim/bundle/tagbar
     echo " \" tagbar configuration" >> vimrc
+    echo "set runtimepath^=~/.vim/bundle/tagbar" >> vimrc
     echo "map <C-O> :Tagbar<CR>" >> vimrc 
+}
+
+install_vim_and_set() {
+  echo "clonnig vim..."
+  cd /tmp && git clone https://github.com/vim/vim.git && cd vim
+  ./configure --enable-python3interp --prefix=/usr
+  echo "building vim..."
+  make && sudo make install
+
+  echo "Set Vim as a default editor"
+  sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
+  sudo update-alternatives --set editor /usr/local/bin/vim
+  sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
+  sudo update-alternatives --set vi /usr/local/bin/vim   
 }
 
 #main
 
+install_vim_and_set
 mv ${HOME}/.vimrc ${HOME}/vimrc_backup
 cd ${HOME}/.vim/bundle
 echo "remove all plugin"
@@ -128,3 +144,5 @@ install_tagbar
 
 cp vimrc ${HOME}/.vimrc
 cp tmux.conf ${HOME}/.tmux.conf
+cd ${CURRENT_PATH}
+git checkout vimrc
