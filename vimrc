@@ -93,6 +93,10 @@ map <C-L> <C-W>l
 map <s-z> :vs %:r.cc<CR>
 map <s-x> :vs %:r.h<CR>
 
+" gt gT mapping
+noremap <S-l> gt
+noremap <S-h> gT
+
 "" Set ctags to find the tag througbh the several directory 
 function SetTags()
   let curdir = getcwd()
