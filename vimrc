@@ -36,6 +36,7 @@ set wildmode=longest,list
 set hlsearch "Highlighting Keyworkd
 set incsearch " Searching starts after you enter the string
 set smartcase "case-sensitive search
+set ignorecase 
 
 
 set statusline=\ %<%l:%v\ [%P]%=%a\ %h%m%r\ %F\
