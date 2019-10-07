@@ -20,20 +20,7 @@ COLOR_LIGHT_CYAN='\033[1;36m'
 COLOR_WHITE='\033[1;37m'
 
 CURRENT_PATH=${PWD}
-#sed -e '2 i\wowowowowowowowowowow' vimrc
-#if [ -e ~/.vim/bundle/Vundle.vim ]
-#then
-#  echo -e ${COLOR_RED} "vundle is already installed"
-#else
-#  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-#fi
-#
-#echo -e ${COLOR_NONE} "inset vundle in vimrc"
 
-#insert vundle"
-#perl -p -i -e'$.==2 and print "set rtp+=~/.vim/bundle/Vundle.vim\n\n\n"' vimrc
-#perl -p -i -e'$.==3 and print "call vundle#begin()\n"' vimrc
-#perl -p -i -e'$.==4 and print "Plugin 'VundleVim/Vundle.vim'\n"' vimrc
 
 install_light_line() {
   if [ -e ~/.vim/bundle/lightline.vim ]
@@ -134,22 +121,60 @@ install_fzf() {
     echo "normap <C-P> :call fzf#run({'options': '--height 40% --border --border'}) <CR>" >> vimrc
 }
 
+set_mode() {
+    echo -e "\n\n"
+    read -p "press vim setting mode.ex) light : 1, normal: 2, full install : 3 " promt
+
+    if [[ ${prompt} == "1" ]]; then
+        pre_process
+        set_light
+        post_process
+    elif [[ ${prompt} == "2" ]]; then
+        pre_process
+        set_normal
+        post_process
+    else
+        pre_process
+        set_full
+        post_process
+    fi
+}
+
+set_light() {
+    install_light_line
+}
+
+set_normal() {
+    install_light_line
+    install_fzf
+    install_gitgutter
+    install_tagbar
+}
+
+set_full() {
+    install_vim_and_set
+    install_light_line
+    install_fzf
+    install_gitgutter
+    install_ycm
+}
+
+pre_process() {
+    mv ${HOME}/.vimrc ${HOME}/vimrc_backup
+    cd ${HOME}/.vim/bundle
+    echo "remove all plugin"
+    rm -rf *
+    echo "remove complete"
+    cd ${CURRENT_PATH}
+}
+
+post_process() {
+    cp vimrc ${HOME}/.vimrc
+    cp tmux.conf ${HOME}/.tmux.conf
+    cd ${CURRENT_PATH}
+    git checkout vimrc
+}
 #main
 
-install_vim_and_set
-mv ${HOME}/.vimrc ${HOME}/vimrc_backup
-cd ${HOME}/.vim/bundle
-echo "remove all plugin"
-rm -rf *
-echo "remove complete"
-cd ${CURRENT_PATH}
-install_light_line
-install_fzf
-install_gitgutter
-install_ycm
-install_tagbar
+set_mode
 
-cp vimrc ${HOME}/.vimrc
-cp tmux.conf ${HOME}/.tmux.conf
-cd ${CURRENT_PATH}
-git checkout vimrc
