@@ -127,6 +127,13 @@ install_vim_and_set() {
   sudo update-alternatives --set vi /usr/local/bin/vim   
 }
 
+install_fzf() {
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.vim/bundle/fzf
+    cd ~/.vim/bundle/fzf && ./install
+    echo "set runtimepath^=~/.vim/bundle/fzf" >> vimrc
+    echo "normap <C-P> :call fzf#run({'sink': 'tabe', 'options': '--height 40% --border --border'}) <CR>" >> vimrc
+}
+
 #main
 
 install_vim_and_set
@@ -137,7 +144,7 @@ rm -rf *
 echo "remove complete"
 cd ${CURRENT_PATH}
 install_light_line
-install_ctrlp
+install_fzf
 install_gitgutter
 install_ycm
 install_tagbar
