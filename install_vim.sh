@@ -131,7 +131,7 @@ install_fzf() {
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.vim/bundle/fzf
     cd ~/.vim/bundle/fzf && ./install
     echo "set runtimepath^=~/.vim/bundle/fzf" >> vimrc
-    echo "normap <C-P> :call fzf#run({'sink': 'tabe', 'options': '--height 40% --border --border'}) <CR>" >> vimrc
+    echo "normap <C-P> :call fzf#run({'options': '--height 40% --border --border'}) <CR>" >> vimrc
 }
 
 #main
