@@ -128,7 +128,6 @@ function! LoadCscope()
    endif
 endfunction
 au BufEnter /* call LoadCscope()
-map <C-P> : cs find f 
 
 " Set the color of the highlight 
 highlight Comment term=bold cterm=bold ctermfg=4
