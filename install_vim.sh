@@ -189,3 +189,4 @@ post_process() {
 }
 #main
 
+set_mode
