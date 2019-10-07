@@ -90,6 +90,7 @@ install_ycm() {
   echo "map <C-F> :YcmCompleter FixIt<CR>" >> vimrc
   echo "map <C-V> :YcmCompleter GoTo<CR>" >> vimrc
   echo "set runtimepath^=~/.vim/bundle/YouCompleteMe" >> vimrc
+  echo -e ${COLOR_NONE} "========================================================="
 
 }
 
@@ -117,13 +118,14 @@ install_vim_and_set() {
 install_fzf() {
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.vim/bundle/fzf
     cd ~/.vim/bundle/fzf && ./install
+    cd ${CURRENT_PATH}
     echo "set runtimepath^=~/.vim/bundle/fzf" >> vimrc
     echo "normap <C-P> :call fzf#run({'options': '--height 40% --border --border'}) <CR>" >> vimrc
 }
 
 set_mode() {
     echo -e "\n\n"
-    read -p "press vim setting mode.ex) light : 1, normal: 2, full install : 3 " promt
+    read -p "press vim setting mode.ex) light : 1, normal: 2, full install : 3 " prompt
 
     if [[ ${prompt} == "1" ]]; then
         pre_process
@@ -133,18 +135,25 @@ set_mode() {
         pre_process
         set_normal
         post_process
-    else
+    elif [[ ${prompt} == "3" ]]; then
         pre_process
         set_full
         post_process
+    else
+        echo -e ${COLOR_BLUE} "wrong key input"
+        echo -e ${COLOR_NONE} "========================================================="
     fi
 }
 
 set_light() {
+    echo -e ${COLOR_YELLOW} "light mode starts"
+    echo -e ${COLOR_NONE} "========================================================="
     install_light_line
 }
 
 set_normal() {
+    echo -e ${COLOR_YELLOW} "normal mode starts"
+    echo -e ${COLOR_NONE} "========================================================="
     install_light_line
     install_fzf
     install_gitgutter
@@ -152,6 +161,8 @@ set_normal() {
 }
 
 set_full() {
+    echo -e ${COLOR_YELLOW} "full mode starts"
+    echo -e ${COLOR_NONE} "========================================================="
     install_vim_and_set
     install_light_line
     install_fzf
@@ -162,9 +173,11 @@ set_full() {
 pre_process() {
     mv ${HOME}/.vimrc ${HOME}/vimrc_backup
     cd ${HOME}/.vim/bundle
-    echo "remove all plugin"
+    echo -e ${COLOR_RED} "remove all plugin"
+    echo -e ${COLOR_NONE} "========================================================="
     rm -rf *
-    echo "remove complete"
+    echo -e ${COLOR_RED} "remove complete"
+    echo -e ${COLOR_NONE} "========================================================="
     cd ${CURRENT_PATH}
 }
 
@@ -177,4 +190,3 @@ post_process() {
 #main
 
 set_mode
-
