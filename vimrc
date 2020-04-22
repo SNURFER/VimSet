@@ -99,8 +99,8 @@ noremap <S-l> gt
 noremap <S-h> gT
 
 " highlight without moving to next word
-nnoremap <silent> * :execute "normal! *N"<cr>
-nnoremap <silent> # :execute "normal! #N"<cr>
+nnoremap <silent> * :execute "normal! #N"<cr>
+nnoremap <silent> # :execute "normal! *N"<cr>
 
 "" Set ctags to find the tag througbh the several directory 
 function SetTags()

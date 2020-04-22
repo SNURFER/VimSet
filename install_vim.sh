@@ -120,7 +120,7 @@ install_fzf() {
     cd ~/.vim/bundle/fzf && ./install
     cd ${CURRENT_PATH}
     echo "set runtimepath^=~/.vim/bundle/fzf" >> vimrc
-    echo "noremap <C-P> :call fzf#run({'options': '--height 40% --border --border'}) <CR>" >> vimrc
+    echo "noremap <C-P> :call fzf#run({'sink': 'e', 'options': '--height 40% --border --border'}) <CR>" >> vimrc
 }
 
 set_mode() {
