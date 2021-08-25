@@ -102,40 +102,10 @@ noremap <S-h> gT
 nnoremap <silent> * :execute "normal! #N"<cr>
 nnoremap <silent> # :execute "normal! *N"<cr>
 
-"" Set ctags to find the tag througbh the several directory 
-function SetTags()
-  let curdir = getcwd()
-    while !filereadable("tags") && getcwd() != "/"
-      cd ..
-     endwhile
-  if filereadable("tags")
-  execute "set tags=" . getcwd() . "/tags"
-  endif
-  execute " cd " . curdir
-endfunction
- 
-call SetTags()
-
-"" Set cscope function to find the several tags
-set csprg=/usr/bin/cscope
-set csto=0
-set cst
-set nocsverb
- 
-function! LoadCscope()
-  let db = findfile("cscope.out", ".;")
-  if(!empty(db))
-    let path = strpart(db, 0, match(db, "/cscope.out$"))
-    set nocscopeverbose " suppresss 'dubplicate connection ' error
-    exe "cs add " . db . "" . path
-    set cscopeverbose
-   endif
-endfunction
-au BufEnter /* call LoadCscope()
-
 " Set the color of the highlight 
 highlight Comment term=bold cterm=bold ctermfg=4
 hi Search ctermbg=DarkGray cterm=bold ctermfg=Yellow
 hi Visual ctermbg=LightGreen cterm=bold ctermfg=DarkBlue guifg=Yellow guibg=#FFFFFF
+colorscheme desert
 
 
